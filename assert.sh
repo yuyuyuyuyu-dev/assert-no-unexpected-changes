@@ -20,6 +20,8 @@ cleanup() {
 	rm -rf "${work}"
 }
 trap cleanup EXIT
+trap 'exit 130' INT
+trap 'exit 143' TERM
 
 # The runner does not enforce `required` on an action's inputs, so an empty act
 # input would otherwise take the diff of a container that did nothing and report
