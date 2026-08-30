@@ -1,0 +1,23 @@
+name: Release
+on:
+  release:
+    types: [published]
+permissions: {}
+jobs:
+  # A caller writes `@v1` and expects the newest v1 release, so the major tag
+  # follows every release rather than naming one of them. A release candidate is
+  # not what they asked for, so it is left alone.
+  major-tag:
+    if: github.event.release.prerelease == false
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+      - name: move the major tag to this release
+        env:
+          TAG: ${{ github.event.release.tag_name }}
+        run: |
+          major="${TAG%%.*}"
+          git tag --force "$major" "$GITHUB_SHA"
+          git push --force origin "$major"
