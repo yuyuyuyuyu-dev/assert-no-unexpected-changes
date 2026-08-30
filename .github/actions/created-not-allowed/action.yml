@@ -11,7 +11,7 @@ runs:
       uses: ./
       continue-on-error: true
       with:
-        act: ${{ inputs.kind == 'file' && 'touch /not-allowed' || 'mkdir /not-allowed' }}
+        act: ${{ inputs.kind == 'file' && 'touch /unexpected' || 'mkdir /unexpected' }}
         allowlist: /allowed
     - name: A ${{ inputs.kind }} created where no entry names it is detected
       if: always()
@@ -25,7 +25,7 @@ runs:
       continue-on-error: true
       with:
         arrange: mkdir /allowed
-        act: ${{ inputs.kind == 'file' && 'touch /allowed/thing' || 'mkdir /allowed/thing' }}
+        act: ${{ inputs.kind == 'file' && 'touch /allowed/unexpected' || 'mkdir /allowed/unexpected' }}
         allowlist: /allowed
     - name: A ${{ inputs.kind }} created below an entry that has no glob is detected
       if: always()
