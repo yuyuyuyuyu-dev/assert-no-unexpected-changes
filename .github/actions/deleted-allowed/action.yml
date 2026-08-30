@@ -11,22 +11,22 @@ runs:
       name: A ${{ inputs.kind }} deleted at the path an entry names is ignored
       uses: ./
       with:
-        arrange: ${{ inputs.kind == 'file' && 'touch /allowed' || 'mkdir /allowed' }}
-        act: rm -r /allowed
-        allowlist: /allowed
+        arrange: ${{ inputs.kind == 'file' && 'touch /disposable' || 'mkdir /disposable' }}
+        act: rm -r /disposable
+        allowlist: /disposable
     - id: below-a-glob
       name: A ${{ inputs.kind }} deleted below an entry that ends with a glob is ignored
       if: always()
       uses: ./
       with:
-        arrange: ${{ inputs.kind == 'file' && 'mkdir -p /allowed/deep && touch /allowed/deep/thing' || 'mkdir -p /allowed/deep/thing' }}
-        act: rm -r /allowed/deep/thing
+        arrange: ${{ inputs.kind == 'file' && 'mkdir -p /allowed/deep && touch /allowed/deep/disposable' || 'mkdir -p /allowed/deep/disposable' }}
+        act: rm -r /allowed/deep/disposable
         allowlist: /allowed/*
     - id: above-a-change
       name: The directories above the allowed change are ignored
       if: always()
       uses: ./
       with:
-        arrange: ${{ inputs.kind == 'file' && 'mkdir -p /allowed/nested && touch /allowed/nested/thing' || 'mkdir -p /allowed/nested/thing' }}
-        act: rm -r /allowed/nested/thing
-        allowlist: /allowed/nested/thing
+        arrange: ${{ inputs.kind == 'file' && 'mkdir -p /allowed/nested && touch /allowed/nested/disposable' || 'mkdir -p /allowed/nested/disposable' }}
+        act: rm -r /allowed/nested/disposable
+        allowlist: /allowed/nested/disposable
