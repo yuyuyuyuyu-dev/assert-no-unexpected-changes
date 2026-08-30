@@ -7,15 +7,15 @@ runs:
       uses: ./
       continue-on-error: true
       with:
-        arrange: touch /outside
-        act: echo edited >> /outside
+        arrange: touch /unexpected
+        act: echo edited >> /unexpected
         allowlist: /allowed
     - name: A file edited where no entry names it is detected
       if: always()
       shell: bash
       env:
         OUTCOME: ${{ steps.no-entry.outcome }}
-      run: '[ "$OUTCOME" = failure ]'
+      run: test "$OUTCOME" = failure
     - id: below-an-entry
       if: always()
       uses: ./
@@ -29,4 +29,4 @@ runs:
       shell: bash
       env:
         OUTCOME: ${{ steps.below-an-entry.outcome }}
-      run: '[ "$OUTCOME" = failure ]'
+      run: test "$OUTCOME" = failure

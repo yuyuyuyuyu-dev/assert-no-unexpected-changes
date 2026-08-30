@@ -11,15 +11,15 @@ runs:
       uses: ./
       continue-on-error: true
       with:
-        arrange: ${{ inputs.kind == 'file' && 'touch /outside' || 'mkdir /outside' }}
-        act: rm -r /outside
+        arrange: ${{ inputs.kind == 'file' && 'touch /unexpected' || 'mkdir /unexpected' }}
+        act: rm -r /unexpected
         allowlist: /allowed
     - name: A ${{ inputs.kind }} deleted where no entry names it is detected
       if: always()
       shell: bash
       env:
         OUTCOME: ${{ steps.no-entry.outcome }}
-      run: '[ "$OUTCOME" = failure ]'
+      run: test "$OUTCOME" = failure
     - id: below-an-entry
       if: always()
       uses: ./
@@ -33,4 +33,4 @@ runs:
       shell: bash
       env:
         OUTCOME: ${{ steps.below-an-entry.outcome }}
-      run: '[ "$OUTCOME" = failure ]'
+      run: test "$OUTCOME" = failure
