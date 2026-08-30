@@ -13,7 +13,8 @@ inputs:
     required: true
   allowlist:
     description: "TODO: write after the README is written"
-    required: true
+    required: false
+    default: ""
   workdir:
     description: "TODO: write after the README is written"
     required: false

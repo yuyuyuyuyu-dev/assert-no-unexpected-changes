@@ -13,7 +13,6 @@ runs:
       with:
         arrange: ${{ inputs.kind == 'file' && 'touch /expected' || 'mkdir /expected' }}
         act: rm -r /expected
-        allowlist: /allowed
     - name: A ${{ inputs.kind }} deleted where no entry names it is detected
       if: always()
       shell: bash

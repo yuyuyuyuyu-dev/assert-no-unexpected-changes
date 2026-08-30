@@ -12,7 +12,6 @@ runs:
       continue-on-error: true
       with:
         act: ${{ inputs.kind == 'file' && 'touch /unexpected' || 'mkdir /unexpected' }}
-        allowlist: /allowed
     - name: A ${{ inputs.kind }} created where no entry names it is detected
       if: always()
       shell: bash

@@ -6,4 +6,3 @@ runs:
     - uses: ./
       with:
         act: touch build-output.txt
-        allowlist: ""

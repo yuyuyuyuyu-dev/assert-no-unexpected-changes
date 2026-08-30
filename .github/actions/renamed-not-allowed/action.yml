@@ -13,7 +13,6 @@ runs:
       with:
         arrange: ${{ inputs.kind == 'file' && 'touch /expected' || 'mkdir /expected' }}
         act: mv /expected /unexpected
-        allowlist: /allowed
     - name: A ${{ inputs.kind }} renamed where no entry names it is detected
       if: always()
       shell: bash

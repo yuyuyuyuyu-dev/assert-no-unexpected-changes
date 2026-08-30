@@ -9,7 +9,6 @@ runs:
       with:
         arrange: touch /expected
         act: echo edited >> /expected
-        allowlist: /allowed
     - name: A file edited where no entry names it is detected
       if: always()
       shell: bash

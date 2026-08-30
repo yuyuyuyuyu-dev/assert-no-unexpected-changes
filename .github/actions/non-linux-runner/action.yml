@@ -8,7 +8,6 @@ runs:
       continue-on-error: true
       with:
         act: touch /unexpected
-        allowlist: /allowed
     - name: The action failed
       shell: bash
       env:
