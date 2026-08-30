@@ -7,7 +7,7 @@ runs:
       uses: ./
       continue-on-error: true
       with:
-        act: touch /unexpected
+        act: touch /not-allowed
         allowlist: /allowed
     - name: The action failed
       shell: bash

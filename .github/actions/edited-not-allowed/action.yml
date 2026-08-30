@@ -7,8 +7,8 @@ runs:
       uses: ./
       continue-on-error: true
       with:
-        arrange: touch /unexpected
-        act: echo edited >> /unexpected
+        arrange: touch /not-allowed
+        act: echo edited >> /not-allowed
         allowlist: /allowed
     - name: A file edited where no entry names it is detected
       if: always()
