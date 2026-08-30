@@ -1,0 +1,10 @@
+name: below a glob
+description: Checks that an allowlist entry ending with a glob covers every depth below the path it names.
+runs:
+  using: composite
+  steps:
+    - uses: ./
+      with:
+        arrange: mkdir /allowed
+        act: mkdir -p /allowed/deep/deeper && touch /allowed/deep/deeper/thing
+        allowlist: /allowed/*

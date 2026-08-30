@@ -1,0 +1,14 @@
+name: created allowed
+description: Checks that a file or a directory created where the allowlist allows it is ignored.
+inputs:
+  kind:
+    description: Either file or directory.
+    required: true
+runs:
+  using: composite
+  steps:
+    - uses: ./
+      with:
+        arrange: mkdir /allowed
+        act: ${{ inputs.kind == 'file' && 'touch /allowed/thing' || 'mkdir /allowed/thing' }}
+        allowlist: /allowed/thing

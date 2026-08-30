@@ -1,0 +1,14 @@
+name: deleted allowed
+description: Checks that a file or a directory deleted where the allowlist allows it is ignored.
+inputs:
+  kind:
+    description: Either file or directory.
+    required: true
+runs:
+  using: composite
+  steps:
+    - uses: ./
+      with:
+        arrange: ${{ inputs.kind == 'file' && 'mkdir /allowed && touch /allowed/thing' || 'mkdir -p /allowed/thing' }}
+        act: rm -r /allowed/thing
+        allowlist: /allowed/thing

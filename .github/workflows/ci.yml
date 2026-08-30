@@ -1,0 +1,143 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  yamlfmt:
+    name: yamlfmt
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: docker://ghcr.io/google/yamlfmt:0.21.0
+        with:
+          args: -lint .
+  actionlint:
+    name: actionlint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: docker://rhysd/actionlint:1.7.12
+        with:
+          args: -color
+  created-not-allowed:
+    name: should detect a ${{ matrix.kind }} created where the allowlist does not allow it
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        kind: [file, directory]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/created-not-allowed
+        with:
+          kind: ${{ matrix.kind }}
+  renamed-not-allowed:
+    name: should detect a ${{ matrix.kind }} renamed where the allowlist does not allow it
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        kind: [file, directory]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/renamed-not-allowed
+        with:
+          kind: ${{ matrix.kind }}
+  deleted-not-allowed:
+    name: should detect a ${{ matrix.kind }} deleted where the allowlist does not allow it
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        kind: [file, directory]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/deleted-not-allowed
+        with:
+          kind: ${{ matrix.kind }}
+  edited-not-allowed:
+    name: should detect a file edited where the allowlist does not allow it
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/edited-not-allowed
+  created-allowed:
+    name: should ignore a ${{ matrix.kind }} created where the allowlist allows it
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        kind: [file, directory]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/created-allowed
+        with:
+          kind: ${{ matrix.kind }}
+  renamed-allowed:
+    name: should ignore a ${{ matrix.kind }} renamed where the allowlist allows it
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        kind: [file, directory]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/renamed-allowed
+        with:
+          kind: ${{ matrix.kind }}
+  deleted-allowed:
+    name: should ignore a ${{ matrix.kind }} deleted where the allowlist allows it
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        kind: [file, directory]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/deleted-allowed
+        with:
+          kind: ${{ matrix.kind }}
+  edited-allowed:
+    name: should ignore a file edited where the allowlist allows it
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/edited-allowed
+  below-an-entry:
+    name: should detect a file created below an allowlist entry that has no glob
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/below-an-entry
+  below-a-glob:
+    name: should ignore a file created below an allowlist entry that ends with a glob
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/below-a-glob
+  parent-of-a-change:
+    name: should ignore a directory changed only because an allowed change is below it
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/parent-of-a-change
+  working-directory:
+    name: should ignore a change under the working directory
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/working-directory
+  non-linux-runner:
+    name: should fail on a non-Linux runner (${{ matrix.runner }})
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      fail-fast: false
+      matrix:
+        runner: [macos-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/non-linux-runner

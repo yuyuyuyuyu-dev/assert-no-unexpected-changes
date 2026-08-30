@@ -1,0 +1,16 @@
+name: renamed allowed
+description: Checks that a file or a directory renamed where the allowlist allows it is ignored.
+inputs:
+  kind:
+    description: Either file or directory.
+    required: true
+runs:
+  using: composite
+  steps:
+    - uses: ./
+      with:
+        arrange: ${{ inputs.kind == 'file' && 'mkdir /allowed && touch /allowed/thing' || 'mkdir -p /allowed/thing' }}
+        act: mv /allowed/thing /allowed/renamed
+        allowlist: |
+          /allowed/thing
+          /allowed/renamed

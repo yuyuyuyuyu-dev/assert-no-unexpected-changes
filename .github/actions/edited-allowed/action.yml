@@ -1,0 +1,10 @@
+name: edited allowed
+description: Checks that a file edited where the allowlist allows it is ignored.
+runs:
+  using: composite
+  steps:
+    - uses: ./
+      with:
+        arrange: mkdir /allowed && touch /allowed/thing
+        act: echo edited >> /allowed/thing
+        allowlist: /allowed/thing

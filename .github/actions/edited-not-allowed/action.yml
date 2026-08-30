@@ -1,0 +1,17 @@
+name: edited not allowed
+description: Checks that a file edited where the allowlist does not allow it is detected.
+runs:
+  using: composite
+  steps:
+    - id: subject
+      uses: ./
+      continue-on-error: true
+      with:
+        arrange: touch /outside
+        act: echo edited >> /outside
+        allowlist: /allowed
+    - name: The action failed
+      shell: bash
+      env:
+        OUTCOME: ${{ steps.subject.outcome }}
+      run: '[ "$OUTCOME" = failure ]'

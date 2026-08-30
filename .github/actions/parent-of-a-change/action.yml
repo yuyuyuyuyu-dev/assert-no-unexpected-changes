@@ -1,0 +1,10 @@
+name: parent of a change
+description: Checks that a directory reported as changed only because an allowed change sits below it is ignored.
+runs:
+  using: composite
+  steps:
+    - uses: ./
+      with:
+        arrange: mkdir -p /allowed/nested
+        act: touch /allowed/nested/thing
+        allowlist: /allowed/nested/thing
