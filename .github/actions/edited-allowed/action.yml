@@ -3,8 +3,26 @@ description: Checks that a file edited where the allowlist allows it is ignored.
 runs:
   using: composite
   steps:
-    - uses: ./
+    - id: at-an-entry
+      name: A file edited at the path an entry names is ignored
+      uses: ./
       with:
         arrange: mkdir /allowed && touch /allowed/thing
         act: echo edited >> /allowed/thing
         allowlist: /allowed/thing
+    - id: below-a-glob
+      name: A file edited below an entry that ends with a glob is ignored
+      if: always()
+      uses: ./
+      with:
+        arrange: mkdir -p /allowed/deep && touch /allowed/deep/thing
+        act: echo edited >> /allowed/deep/thing
+        allowlist: /allowed/*
+    - id: above-a-change
+      name: The directories above the allowed change are ignored
+      if: always()
+      uses: ./
+      with:
+        arrange: mkdir -p /allowed/nested && touch /allowed/nested/thing
+        act: echo edited >> /allowed/nested/thing
+        allowlist: /allowed/nested/thing

@@ -3,15 +3,30 @@ description: Checks that a file edited where the allowlist does not allow it is 
 runs:
   using: composite
   steps:
-    - id: subject
+    - id: no-entry
       uses: ./
       continue-on-error: true
       with:
         arrange: touch /outside
         act: echo edited >> /outside
         allowlist: /allowed
-    - name: The action failed
+    - name: A file edited where no entry names it is detected
+      if: always()
       shell: bash
       env:
-        OUTCOME: ${{ steps.subject.outcome }}
+        OUTCOME: ${{ steps.no-entry.outcome }}
+      run: '[ "$OUTCOME" = failure ]'
+    - id: below-an-entry
+      if: always()
+      uses: ./
+      continue-on-error: true
+      with:
+        arrange: mkdir /allowed && touch /allowed/thing
+        act: echo edited >> /allowed/thing
+        allowlist: /allowed
+    - name: A file edited below an entry that has no glob is detected
+      if: always()
+      shell: bash
+      env:
+        OUTCOME: ${{ steps.below-an-entry.outcome }}
       run: '[ "$OUTCOME" = failure ]'

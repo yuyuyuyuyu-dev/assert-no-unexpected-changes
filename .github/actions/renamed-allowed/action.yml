@@ -7,10 +7,30 @@ inputs:
 runs:
   using: composite
   steps:
-    - uses: ./
+    - id: at-an-entry
+      name: A ${{ inputs.kind }} renamed at the paths entries name is ignored
+      uses: ./
       with:
         arrange: ${{ inputs.kind == 'file' && 'mkdir /allowed && touch /allowed/thing' || 'mkdir -p /allowed/thing' }}
         act: mv /allowed/thing /allowed/renamed
         allowlist: |
           /allowed/thing
           /allowed/renamed
+    - id: below-a-glob
+      name: A ${{ inputs.kind }} renamed below an entry that ends with a glob is ignored
+      if: always()
+      uses: ./
+      with:
+        arrange: ${{ inputs.kind == 'file' && 'mkdir -p /allowed/deep && touch /allowed/deep/thing' || 'mkdir -p /allowed/deep/thing' }}
+        act: mv /allowed/deep/thing /allowed/deep/renamed
+        allowlist: /allowed/*
+    - id: above-a-change
+      name: The directories above the allowed change are ignored
+      if: always()
+      uses: ./
+      with:
+        arrange: ${{ inputs.kind == 'file' && 'mkdir -p /allowed/nested && touch /allowed/nested/thing' || 'mkdir -p /allowed/nested/thing' }}
+        act: mv /allowed/nested/thing /allowed/nested/renamed
+        allowlist: |
+          /allowed/nested/thing
+          /allowed/nested/renamed

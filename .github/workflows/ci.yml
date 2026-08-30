@@ -123,24 +123,6 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - uses: ./.github/actions/edited-allowed
-  below-an-entry:
-    name: should detect a file created below an allowlist entry that has no glob
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v7
-      - uses: ./.github/actions/below-an-entry
-  below-a-glob:
-    name: should ignore a file created below an allowlist entry that ends with a glob
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v7
-      - uses: ./.github/actions/below-a-glob
-  parent-of-a-change:
-    name: should ignore a directory changed only because an allowed change is below it
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v7
-      - uses: ./.github/actions/parent-of-a-change
   working-directory:
     name: should ignore a change under the working directory
     runs-on: ubuntu-latest

@@ -7,15 +7,30 @@ inputs:
 runs:
   using: composite
   steps:
-    - id: subject
+    - id: no-entry
       uses: ./
       continue-on-error: true
       with:
         arrange: ${{ inputs.kind == 'file' && 'touch /outside' || 'mkdir /outside' }}
         act: rm -r /outside
         allowlist: /allowed
-    - name: The action failed
+    - name: A ${{ inputs.kind }} deleted where no entry names it is detected
+      if: always()
       shell: bash
       env:
-        OUTCOME: ${{ steps.subject.outcome }}
+        OUTCOME: ${{ steps.no-entry.outcome }}
+      run: '[ "$OUTCOME" = failure ]'
+    - id: below-an-entry
+      if: always()
+      uses: ./
+      continue-on-error: true
+      with:
+        arrange: ${{ inputs.kind == 'file' && 'mkdir /allowed && touch /allowed/thing' || 'mkdir -p /allowed/thing' }}
+        act: rm -r /allowed/thing
+        allowlist: /allowed
+    - name: A ${{ inputs.kind }} deleted below an entry that has no glob is detected
+      if: always()
+      shell: bash
+      env:
+        OUTCOME: ${{ steps.below-an-entry.outcome }}
       run: '[ "$OUTCOME" = failure ]'

@@ -7,15 +7,30 @@ inputs:
 runs:
   using: composite
   steps:
-    - id: subject
+    - id: no-entry
       uses: ./
       continue-on-error: true
       with:
         arrange: ${{ inputs.kind == 'file' && 'touch /outside' || 'mkdir /outside' }}
         act: mv /outside /renamed
         allowlist: /allowed
-    - name: The action failed
+    - name: A ${{ inputs.kind }} renamed where no entry names it is detected
+      if: always()
       shell: bash
       env:
-        OUTCOME: ${{ steps.subject.outcome }}
+        OUTCOME: ${{ steps.no-entry.outcome }}
+      run: '[ "$OUTCOME" = failure ]'
+    - id: below-an-entry
+      if: always()
+      uses: ./
+      continue-on-error: true
+      with:
+        arrange: ${{ inputs.kind == 'file' && 'mkdir /allowed && touch /allowed/thing' || 'mkdir -p /allowed/thing' }}
+        act: mv /allowed/thing /allowed/renamed
+        allowlist: /allowed
+    - name: A ${{ inputs.kind }} renamed below an entry that has no glob is detected
+      if: always()
+      shell: bash
+      env:
+        OUTCOME: ${{ steps.below-an-entry.outcome }}
       run: '[ "$OUTCOME" = failure ]'
