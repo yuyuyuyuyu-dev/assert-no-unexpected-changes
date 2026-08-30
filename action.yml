@@ -25,8 +25,6 @@ inputs:
 runs:
   using: composite
   steps:
-    # bash rather than the sh the step below uses, because a Windows runner has
-    # no sh to report its own unsuitability with.
     - name: Check the runner's operating system
       shell: bash
       run: |
@@ -37,7 +35,7 @@ runs:
     # The inputs are passed as environment variables rather than interpolated
     # into the script, so that a value containing shell syntax stays a value.
     - name: Assert that nothing unexpected changed
-      shell: sh
+      shell: bash
       env:
         ACTION_PATH: ${{ github.action_path }}
         INPUT_ARRANGE: ${{ inputs.arrange }}
