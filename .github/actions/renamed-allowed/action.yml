@@ -11,11 +11,11 @@ runs:
       name: A ${{ inputs.kind }} renamed at the paths entries name is ignored
       uses: ./
       with:
-        arrange: ${{ inputs.kind == 'file' && 'mkdir /allowed && touch /allowed/thing' || 'mkdir -p /allowed/thing' }}
-        act: mv /allowed/thing /allowed/renamed
+        arrange: ${{ inputs.kind == 'file' && 'touch /allowed' || 'mkdir /allowed' }}
+        act: mv /allowed /renamed
         allowlist: |
-          /allowed/thing
-          /allowed/renamed
+          /allowed
+          /renamed
     - id: below-a-glob
       name: A ${{ inputs.kind }} renamed below an entry that ends with a glob is ignored
       if: always()
