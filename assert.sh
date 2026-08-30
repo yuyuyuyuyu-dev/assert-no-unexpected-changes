@@ -57,7 +57,7 @@ fi
 # nothing behind for anyone to read.
 status=0
 # shellcheck disable=SC2016 # $ARRANGE is for the shell in the container, not this one
-printf 'FROM %s\nARG ARRANGE\nWORKDIR %s\nCOPY . %s\nRUN bash -e -c "$ARRANGE"\n' \
+printf 'FROM %s\nARG ARRANGE\nWORKDIR %s\nCOPY . %s\nRUN sh -e -c "$ARRANGE"\n' \
 	"${base}" "${INPUT_WORKDIR}" "${INPUT_WORKDIR}" |
 	ARRANGE="${INPUT_ARRANGE}" docker build \
 		--build-arg ARRANGE \
@@ -75,7 +75,7 @@ image="$(cat "${work}/iid")"
 # Some runtime and storage driver combinations leave marks of their own in the
 # writable layer. Taking the diff of a container that ran nothing keeps whatever
 # those are out of the allowlist.
-docker run --cidfile "${work}/untouched-cid" "${image}" bash -e -c ':' </dev/null >/dev/null 2>&1
+docker run --cidfile "${work}/untouched-cid" "${image}" sh -e -c ':' </dev/null >/dev/null 2>&1
 untouched="$(cat "${work}/untouched-cid")"
 
 # Closing stdin turns a command that waits for input into a failure rather than a
@@ -86,7 +86,7 @@ status=0
 docker run \
 	--cidfile "${work}/cid" \
 	"${image}" \
-	bash -e -c "${INPUT_ACT}" \
+	sh -e -c "${INPUT_ACT}" \
 	</dev/null >"${work}/act" 2>&1 || status=$?
 
 # `docker diff` reads the container's writable layer, which is discarded together
