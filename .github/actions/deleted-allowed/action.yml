@@ -19,9 +19,9 @@ runs:
       if: always()
       uses: ./
       with:
-        arrange: ${{ inputs.kind == 'file' && 'mkdir -p /allowed/deep && touch /allowed/deep/cache' || 'mkdir -p /allowed/deep/cache' }}
-        act: rm -r /allowed/deep/cache
-        allowlist: /allowed/*
+        arrange: ${{ inputs.kind == 'file' && 'mkdir -p /cache/deep && touch /cache/deep/foo' || 'mkdir -p /cache/deep/foo' }}
+        act: rm -r /cache/deep/foo
+        allowlist: /cache/*
     - id: above-a-change
       name: The directories above the allowed change are ignored
       if: always()
