@@ -1,0 +1,35 @@
+name: should detect a file or a directory renamed where the allowlist does not allow it
+description: Checks that a file or a directory renamed where the allowlist does not allow it is detected.
+inputs:
+  kind:
+    description: Either file or directory.
+    required: true
+runs:
+  using: composite
+  steps:
+    - id: no-entry
+      uses: ./
+      continue-on-error: true
+      with:
+        arrange: ${{ inputs.kind == 'file' && 'touch /expected' || 'mkdir /expected' }}
+        act: mv /expected /unexpected
+    - name: A ${{ inputs.kind }} renamed where no entry names it is detected
+      if: always()
+      shell: bash
+      env:
+        OUTCOME: ${{ steps.no-entry.outcome }}
+      run: test "$OUTCOME" = failure
+    - id: below-an-entry
+      if: always()
+      uses: ./
+      continue-on-error: true
+      with:
+        arrange: ${{ inputs.kind == 'file' && 'mkdir /allowed && touch /allowed/expected' || 'mkdir -p /allowed/expected' }}
+        act: mv /allowed/expected /allowed/unexpected
+        allowlist: /allowed
+    - name: A ${{ inputs.kind }} renamed below an entry that has no glob is detected
+      if: always()
+      shell: bash
+      env:
+        OUTCOME: ${{ steps.below-an-entry.outcome }}
+      run: test "$OUTCOME" = failure

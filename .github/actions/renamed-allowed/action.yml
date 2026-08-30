@@ -1,0 +1,36 @@
+name: should ignore a file or a directory renamed where the allowlist allows it
+description: Checks that a file or a directory renamed where the allowlist allows it is ignored.
+inputs:
+  kind:
+    description: Either file or directory.
+    required: true
+runs:
+  using: composite
+  steps:
+    - id: at-an-entry
+      name: A ${{ inputs.kind }} renamed at the paths entries name is ignored
+      uses: ./
+      with:
+        arrange: ${{ inputs.kind == 'file' && 'touch /allowed' || 'mkdir /allowed' }}
+        act: mv /allowed /renamed
+        allowlist: |
+          /allowed
+          /renamed
+    - id: below-a-glob
+      name: A ${{ inputs.kind }} renamed below an entry that ends with a glob is ignored
+      if: always()
+      uses: ./
+      with:
+        arrange: ${{ inputs.kind == 'file' && 'mkdir -p /allowed/deep && touch /allowed/deep/thing' || 'mkdir -p /allowed/deep/thing' }}
+        act: mv /allowed/deep/thing /allowed/deep/renamed
+        allowlist: /allowed/*
+    - id: above-a-change
+      name: The directories above the allowed change are ignored
+      if: always()
+      uses: ./
+      with:
+        arrange: ${{ inputs.kind == 'file' && 'mkdir -p /allowed/nested && touch /allowed/nested/thing' || 'mkdir -p /allowed/nested/thing' }}
+        act: mv /allowed/nested/thing /allowed/nested/renamed
+        allowlist: |
+          /allowed/nested/thing
+          /allowed/nested/renamed

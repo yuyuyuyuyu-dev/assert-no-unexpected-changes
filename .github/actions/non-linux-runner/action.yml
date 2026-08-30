@@ -1,0 +1,15 @@
+name: should fail on a non-Linux runner
+description: Checks that the action fails on a runner that cannot run Docker containers.
+runs:
+  using: composite
+  steps:
+    - id: subject
+      uses: ./
+      continue-on-error: true
+      with:
+        act: touch /unexpected
+    - name: The action failed
+      shell: bash
+      env:
+        OUTCOME: ${{ steps.subject.outcome }}
+      run: test "$OUTCOME" = failure

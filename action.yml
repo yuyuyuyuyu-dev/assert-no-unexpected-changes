@@ -1,0 +1,47 @@
+name: assert no unexpected changes
+description: "TODO: write after the README is written"
+branding:
+  icon: shield
+  color: green
+inputs:
+  arrange:
+    description: "TODO: write after the README is written"
+    required: false
+    default: ""
+  act:
+    description: "TODO: write after the README is written"
+    required: true
+  allowlist:
+    description: "TODO: write after the README is written"
+    required: false
+    default: ""
+  workdir:
+    description: "TODO: write after the README is written"
+    required: false
+    default: /workdir
+  image:
+    description: "TODO: write after the README is written"
+    required: false
+    default: ""
+runs:
+  using: composite
+  steps:
+    - name: Check the runner's operating system
+      shell: bash
+      run: |
+        if [[ $RUNNER_OS != Linux ]]; then
+          echo "::error::this action builds and runs Docker containers, which GitHub Actions supports on Linux runners only, but this job runs on $RUNNER_OS. Use a Linux runner such as ubuntu-latest."
+          exit 1
+        fi
+    # The inputs are passed as environment variables rather than interpolated
+    # into the script, so that a value containing shell syntax stays a value.
+    - name: Assert that nothing unexpected changed
+      shell: bash
+      env:
+        ACTION_PATH: ${{ github.action_path }}
+        INPUT_ARRANGE: ${{ inputs.arrange }}
+        INPUT_ACT: ${{ inputs.act }}
+        INPUT_ALLOWLIST: ${{ inputs.allowlist }}
+        INPUT_WORKDIR: ${{ inputs.workdir }}
+        INPUT_IMAGE: ${{ inputs.image }}
+      run: "$ACTION_PATH/assert.sh"
