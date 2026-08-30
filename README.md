@@ -11,7 +11,7 @@ Nothing seemed to exist that catches that, and if a thing does not exist you may
 ## What
 
 Under the hood, this action uses `docker diff`.
-First it writes a Dockerfile holding the preparation steps it was given as `inputs`, and builds an image from it.
+First it writes a Dockerfile holding the preparation steps it was given as inputs, and builds an image from it.
 Then it runs two containers from the image it built — one that does nothing but start, and one that goes on to run the command to be verified — and compares their diffs to detect any file or directory created, changed or deleted unexpectedly.
 
 ## How
