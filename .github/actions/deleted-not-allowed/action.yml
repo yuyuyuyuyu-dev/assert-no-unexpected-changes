@@ -1,4 +1,4 @@
-name: deleted not allowed
+name: should detect a file or a directory deleted where the allowlist does not allow it
 description: Checks that a file or a directory deleted where the allowlist does not allow it is detected.
 inputs:
   kind:

@@ -1,4 +1,4 @@
-name: edited not allowed
+name: should detect a file edited where the allowlist does not allow it
 description: Checks that a file edited where the allowlist does not allow it is detected.
 runs:
   using: composite

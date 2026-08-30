@@ -1,4 +1,4 @@
-name: deleted allowed
+name: should ignore a file or a directory deleted where the allowlist allows it
 description: Checks that a file or a directory deleted where the allowlist allows it is ignored.
 inputs:
   kind:

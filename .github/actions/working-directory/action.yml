@@ -1,4 +1,4 @@
-name: working directory
+name: should ignore a change under the working directory
 description: Checks that a change under the working directory is ignored without the allowlist naming it.
 runs:
   using: composite

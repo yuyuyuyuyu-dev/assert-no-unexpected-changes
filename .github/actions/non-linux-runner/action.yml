@@ -1,4 +1,4 @@
-name: non-Linux runner
+name: should fail on a non-Linux runner
 description: Checks that the action fails on a runner that cannot run Docker containers.
 runs:
   using: composite
