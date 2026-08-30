@@ -1,26 +1,26 @@
 name: assert no unexpected changes
-description: "TODO: write after the README is written"
+description: "Asserts that your desktop app, CLI tool or anything else makes no unexpected changes."
 branding:
   icon: shield
   color: green
 inputs:
   arrange:
-    description: "TODO: write after the README is written"
+    description: "Optional. The preparation steps, run in `sh`. Their changes are not measured."
     required: false
     default: ""
   act:
-    description: "TODO: write after the README is written"
+    description: "The command to be verified, run in `sh`."
     required: true
   allowlist:
-    description: "TODO: write after the README is written"
+    description: "Optional. The absolute paths that may change, one per line. An entry is a glob whose `*` also matches `/`, so `/for/example/cache` covers that directory alone and `/for/example/cache/*` covers everything below it. The working directory may change without being listed."
     required: false
     default: ""
   workdir:
-    description: "TODO: write after the README is written"
+    description: "Optional. Where the checkout is placed and where the command starts. Defaults to `/workdir`."
     required: false
     default: /workdir
   image:
-    description: "TODO: write after the README is written"
+    description: "Optional. The image the command runs in, which must run as root. Defaults to Ubuntu."
     required: false
     default: ""
 runs:
