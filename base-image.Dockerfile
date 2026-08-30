@@ -5,4 +5,4 @@
 #
 # Ubuntu because every GitHub hosted Linux runner is Ubuntu, so a command that
 # breaks here breaks in the caller's other jobs too.
-FROM ubuntu:24.04
+FROM ubuntu:26.04
