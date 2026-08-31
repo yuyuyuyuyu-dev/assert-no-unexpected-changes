@@ -2,7 +2,7 @@
 
 This action asserts that your desktop app, CLI tool or anything else makes no unexpected changes.
 
-### Contents
+**Table of Contents**
 
 - [Why](#why)
 - [What](#what)
