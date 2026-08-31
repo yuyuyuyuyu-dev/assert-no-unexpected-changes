@@ -2,6 +2,13 @@
 
 This action asserts that your desktop app, CLI tool or anything else makes no unexpected changes.
 
+## Contents
+
+- [Why](#why)
+- [What](#what)
+- [How](#how)
+- [License](#license)
+
 ## Why
 
 I was about to post on social media that I had built a desktop app when a thought stopped me: if I say an AI built it, some people are going to worry that it will do something strange to their machine.
