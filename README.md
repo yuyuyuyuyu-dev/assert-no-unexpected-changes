@@ -4,12 +4,12 @@ This action asserts that your desktop app, CLI tool or anything else makes no un
 
 **Table of Contents**
 
-- [Why I built it](#why-i-built-it)
+- [Why it was built](#why-it-was-built)
 - [How it works](#how-it-works)
-- [What to add to your workflow](#what-to-add-to-your-workflow)
+- [Installation](#installation)
 - [License](#license)
 
-## Why I built it
+## Why it was built
 
 I want people to be able to trust code an AI wrote, even if it stays a black box to them.
 
@@ -27,7 +27,7 @@ Changes under `workdir` or matched by `allowlist` are ignored.
 If anything else is found, the step fails and lists each change in the log and the job summary, marked `A` for created, `C` for changed or `D` for deleted.
 Docker containers in GitHub Actions work on Linux runners only, so the job has to run on one, and `arrange` and `act` have to work on Linux.
 
-## What to add to your workflow
+## Installation
 
 ```yaml
 # Please replace ${checkout-latest-version} and ${this-action-latest-version} with the latest version numbers, such as `v1`.
