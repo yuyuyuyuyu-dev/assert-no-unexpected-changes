@@ -46,7 +46,7 @@ steps:
       act: | # Run in `sh`. Its changes are checked.
         some-commands-to-verify
         for-example-run-tests
-        run-execution-binary
+        ./the-built-executable
         or-anything-else
       allowlist: | # Optional. Absolute paths that may change, one per line. `*` also matches `/`.
         /this/path/alone
