@@ -19,13 +19,8 @@ Nothing seemed to exist that would catch it, and if a thing does not exist, you 
 
 ## What it does
 
-Under the hood, this action uses `docker diff`.
-First it writes a Dockerfile that copies your checkout into `workdir` and runs `arrange`, and builds an image from it.
-Whatever `arrange` changes becomes part of the image and is not checked.
-Then it runs two containers from the image it built — one that does nothing but start, and one that goes on to run `act` — and compares their diffs to detect any file or directory created, changed or deleted.
-Changes under `workdir` or matched by `allowlist` are ignored.
-If anything else is found, the step fails and lists each change in the log and the job summary, marked `A` for created, `C` for changed or `D` for deleted.
-Docker containers in GitHub Actions work on Linux runners only, so the job has to run on one, and `arrange` and `act` have to work on Linux.
+This action prepares two Docker containers: one runs only the `arrange` phase, and the other runs both the `arrange` and `act` phases.
+Then it checks the difference between the two containers against `allowlist` to detect violations.
 
 ## How to use
 
