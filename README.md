@@ -11,7 +11,7 @@ This action asserts that your desktop app, CLI tool or anything else makes no un
 
 ## Why it was built
 
-I want people to be able to trust code an AI wrote, even if it stays a black box to them.
+This GitHub Action was built to verify that code an AI wrote does nothing "strange", treating the code as a black box.
 
 I was about to post on social media that I had built a desktop app when a thought stopped me: if I say an AI built it, some people are going to worry that it will do something strange to their machine.
 So I asked myself what "something strange" would actually be, and the first answer that came to mind was files deleted or rewritten behind their back.
