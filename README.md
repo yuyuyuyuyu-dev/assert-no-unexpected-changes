@@ -21,13 +21,15 @@ Nothing seemed to exist that would catch it, and if a thing does not exist, you 
 
 This action prepares two Docker containers: one runs only the `arrange` phase, and the other runs both the `arrange` and `act` phases.
 Then it checks the difference between the two containers against `allowlist` to detect violations.
-If there are any, the step fails with an error like this, where `A` means created, `C` means changed and `D` means deleted.
+If there are any, the step fails with an error like this:
 
 ```text
 Error: 2 change(s) outside the allowlist
 A /unexpected
 D /expected
 ```
+
+`A` means created, `C` means changed and `D` means deleted.
 
 ## How to use
 
