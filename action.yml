@@ -16,7 +16,7 @@ inputs:
     required: false
     default: ""
   workdir:
-    description: "Optional. Where the checkout is placed and where the command starts. Defaults to `/workdir`."
+    description: "Optional. Where the workspace (`GITHUB_WORKSPACE`) is copied and where the command starts. Defaults to `/workdir`."
     required: false
     default: /workdir
   image:
