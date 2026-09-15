@@ -20,7 +20,7 @@ Nothing seemed to exist that would catch it, and if a thing does not exist, you 
 ## What it does
 
 This action prepares two Docker containers: one runs only the `arrange` phase, and the other runs both the `arrange` and `act` phases.
-Specifically, it writes a Dockerfile that starts from `image`, copies your checkout into `workdir` with `COPY` and runs the `arrange` phase, and builds an image from it.
+More precisely, it writes a Dockerfile that starts from `image`, copies your checkout into `workdir` with `COPY` and runs the `arrange` phase, and builds an image from it.
 From that image it starts two containers, runs the `act` phase in only one of them, and runs `docker diff` on both.
 Then it checks the difference between the two containers against `allowlist` to detect violations.
 If there are any, the step fails with an error like this:
