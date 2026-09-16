@@ -56,7 +56,7 @@ steps:
         /this/path/alone
         /everything/below/this/*
       workdir: /path/to/workdir # Optional. Defaults to `/workdir`. Changes under it are not checked.
-      image: some-image:a-tag # Optional. Defaults to Ubuntu. Must run as root.
+      image: some-image:a-tag # Optional. Defaults to Ubuntu. Must run as root to change the copied workspace.
 ```
 
 ## License
