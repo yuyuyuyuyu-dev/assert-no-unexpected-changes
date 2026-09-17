@@ -16,11 +16,11 @@ inputs:
     required: false
     default: ""
   workdir:
-    description: "Optional. Where the checkout is placed and where the command starts. Defaults to `/workdir`."
+    description: "Optional. Where the workspace (`GITHUB_WORKSPACE`) is copied and where the command starts. Defaults to `/workdir`."
     required: false
     default: /workdir
   image:
-    description: "Optional. The image the command runs in, which must run as root. Defaults to Ubuntu."
+    description: "Optional. The image the command runs in, which must run as root to change the copied workspace. Defaults to Ubuntu."
     required: false
     default: ""
 runs:
