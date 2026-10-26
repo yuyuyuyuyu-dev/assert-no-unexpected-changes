@@ -7,14 +7,11 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 jobs:
-  yamlfmt:
-    name: yamlfmt
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v7
-      - uses: docker://ghcr.io/google/yamlfmt:0.21.0
-        with:
-          args: -lint .
+  oxfmt:
+    name: Oxfmt
+    permissions:
+      contents: read
+    uses: yuyuyuyuyu-dev/repo-config/.github/workflows/oxfmt.yml@main
   actionlint:
     name: actionlint
     runs-on: ubuntu-latest
