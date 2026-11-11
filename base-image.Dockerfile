@@ -1,4 +1,4 @@
-# Nothing builds this file. It exists so that Dependabot, which reads image
+# Nothing builds this file. It exists so that Renovate, which reads image
 # references out of Dockerfiles but not out of workflow inputs, can keep the
 # default base image current; the action reads the `FROM` line below whenever
 # the caller passes no `image`.

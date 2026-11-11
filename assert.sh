@@ -32,7 +32,7 @@ if [ -z "$(printf '%s' "${INPUT_ACT}" | tr -d '[:space:]')" ]; then
 fi
 
 # Nothing builds base-image.Dockerfile. It is where the default image is pinned,
-# because Dependabot reads image references out of Dockerfiles and not out of
+# because Renovate reads image references out of Dockerfiles and not out of
 # workflow inputs.
 base="${INPUT_IMAGE}"
 if [ -z "$(printf '%s' "${base}" | tr -d '[:space:]')" ]; then
