@@ -32,8 +32,9 @@ if [ -z "$(printf '%s' "${INPUT_ACT}" | tr -d '[:space:]')" ]; then
 fi
 
 # Nothing builds base-image.Dockerfile. It is where the default image is pinned,
-# because Dependabot reads image references out of Dockerfiles and not out of
-# workflow inputs.
+# because Renovate, which updates the dependencies of this repository, reads
+# image references out of Dockerfiles but not out of the input defaults in
+# action.yml.
 base="${INPUT_IMAGE}"
 if [ -z "$(printf '%s' "${base}" | tr -d '[:space:]')" ]; then
 	base="$(awk '/^FROM[[:space:]]/ { sub(/^FROM[[:space:]]+/, ""); print; exit }' "${ACTION_PATH}/base-image.Dockerfile")"
