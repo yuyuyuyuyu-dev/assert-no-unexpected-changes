@@ -33,8 +33,6 @@ runs:
           echo "::error::this action builds and runs Docker containers, which GitHub Actions supports on Linux runners only, but this job runs on $RUNNER_OS. Use a Linux runner such as ubuntu-latest."
           exit 1
         fi
-    # The inputs are passed as environment variables rather than interpolated
-    # into the script, so that a value containing shell syntax stays a value.
     - name: Assert that nothing unexpected changed
       shell: bash
       env:
