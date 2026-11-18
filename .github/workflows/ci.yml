@@ -33,7 +33,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - uses: docker://mvdan/shfmt:v3.14.0
+      - uses: docker://mvdan/shfmt:v3.14.1
         with:
           args: -d .
   created-not-allowed:
