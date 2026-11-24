@@ -3,7 +3,7 @@
 		"biome": "biome"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "2.6.8"
+		"@biomejs/biome": "2.6.9"
 	},
 	"private": true
 }
